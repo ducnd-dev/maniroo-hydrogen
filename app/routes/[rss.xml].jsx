@@ -17,11 +17,9 @@ export async function loader({request, context: {storefront}}) {
     }
 
     const blog = blogs.nodes[0];
-    const articles = blog.articles.nodes;
-
-    const rssContent = generateRSSFeed({
+    const articles = blog.articles.nodes;    const rssContent = generateRSSFeed({
       title: `${blog.title} - Maniroo Store`,
-      description: blog.description || 'Latest updates from Maniroo Store',
+      description: `Latest articles from ${blog.title} at Maniroo Store`,
       link: `${url.origin}/blogs/${blog.handle}`,
       articles,
       baseUrl: url.origin,
@@ -44,11 +42,12 @@ function generateRSSFeed({title, description, link, articles, baseUrl}) {
     .map((article) => {
       const articleUrl = `${baseUrl}/blogs/${article.blog.handle}/${article.handle}`;
       const pubDate = new Date(article.publishedAt).toUTCString();
+      const articleDescription = article.excerpt || `Read the full article: ${article.title}`;
       
       return `
     <item>
       <title><![CDATA[${article.title}]]></title>
-      <description><![CDATA[${article.excerpt || article.summary}]]></description>
+      <description><![CDATA[${articleDescription}]]></description>
       <link>${articleUrl}</link>
       <guid isPermaLink="true">${articleUrl}</guid>
       <pubDate>${pubDate}</pubDate>
@@ -78,14 +77,12 @@ const BLOGS_RSS_QUERY = `#graphql
       nodes {
         title
         handle
-        description
         articles(first: $first, sortKey: PUBLISHED_AT, reverse: true) {
           nodes {
             id
             title
             handle
             excerpt
-            summary
             publishedAt
             blog {
               handle

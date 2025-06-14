@@ -295,6 +295,32 @@ export type StoreRobotsQueryVariables = StorefrontAPI.Exact<{
 
 export type StoreRobotsQuery = {shop: Pick<StorefrontAPI.Shop, 'id'>};
 
+export type BlogsRssQueryVariables = StorefrontAPI.Exact<{
+  first?: StorefrontAPI.InputMaybe<StorefrontAPI.Scalars['Int']['input']>;
+}>;
+
+export type BlogsRssQuery = {
+  blogs: {
+    nodes: Array<
+      Pick<StorefrontAPI.Blog, 'title' | 'handle'> & {
+        articles: {
+          nodes: Array<
+            Pick<
+              StorefrontAPI.Article,
+              'id' | 'title' | 'handle' | 'excerpt' | 'publishedAt'
+            > & {
+              blog: Pick<StorefrontAPI.Blog, 'handle'>;
+              image?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.Image, 'url' | 'altText'>
+              >;
+            }
+          >;
+        };
+      }
+    >;
+  };
+};
+
 export type FeaturedCollectionFragment = Pick<
   StorefrontAPI.Collection,
   'id' | 'title' | 'handle'
@@ -1274,6 +1300,10 @@ interface GeneratedQueryTypes {
   '#graphql\n  query StoreRobots($country: CountryCode, $language: LanguageCode)\n   @inContext(country: $country, language: $language) {\n    shop {\n      id\n    }\n  }\n': {
     return: StoreRobotsQuery;
     variables: StoreRobotsQueryVariables;
+  };
+  '#graphql\n  query BlogsRSS($first: Int = 10) {\n    blogs(first: 1) {\n      nodes {\n        title\n        handle\n        articles(first: $first, sortKey: PUBLISHED_AT, reverse: true) {\n          nodes {\n            id\n            title\n            handle\n            excerpt\n            publishedAt\n            blog {\n              handle\n            }\n            image {\n              url\n              altText\n            }\n          }\n        }\n      }\n    }\n  }\n': {
+    return: BlogsRSSQuery;
+    variables: BlogsRSSQueryVariables;
   };
   '#graphql\n  fragment FeaturedCollection on Collection {\n    id\n    title\n    image {\n      id\n      url\n      altText\n      width\n      height\n    }\n    handle\n  }\n  query FeaturedCollection($country: CountryCode, $language: LanguageCode)\n    @inContext(country: $country, language: $language) {\n    collections(first: 1, sortKey: UPDATED_AT, reverse: true) {\n      nodes {\n        ...FeaturedCollection\n      }\n    }\n  }\n': {
     return: FeaturedCollectionQuery;

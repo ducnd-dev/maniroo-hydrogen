@@ -3,6 +3,7 @@ import {Await, NavLink, useAsyncValue} from 'react-router';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import {EnhancedSearch} from '~/components/EnhancedSearch';
+import {AnimatedCartIcon} from '~/components/CartIcon';
 
 /**
  * @param {HeaderProps}
@@ -210,10 +211,9 @@ function SearchToggle() {
 function CartBadge({count}) {
   const {open} = useAside();
   const {publish, shop, cart, prevCart} = useAnalytics();
-
   return (
     <button
-      className="relative p-2 rounded-full hover:bg-gray-100 transition-colors"
+      className="relative p-2 rounded-full hover:bg-gray-100 transition-all duration-200 group"
       onClick={(e) => {
         e.preventDefault();
         open('cart');
@@ -226,14 +226,7 @@ function CartBadge({count}) {
       }}
       aria-label={`Cart with ${count || 0} items`}
     >
-      <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
-      </svg>
-      {count !== null && count > 0 && (
-        <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
-          {count > 99 ? '99+' : count}
-        </span>
-      )}
+      <AnimatedCartIcon count={count} className="w-5 h-5 group-hover:scale-110 transition-transform" />
     </button>
   );
 }
