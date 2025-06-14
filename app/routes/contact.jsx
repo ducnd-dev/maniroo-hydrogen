@@ -169,7 +169,7 @@ export default function Contact() {
 
           {/* Contact Information */}
           <div className="space-y-8">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+            {/* <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
               <h2 className="font-serif text-3xl font-bold text-gray-800 mb-6">
                 Contact Information
               </h2>
@@ -215,7 +215,7 @@ export default function Contact() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* FAQ Section */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">

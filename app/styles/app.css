@@ -1,5 +1,5 @@
-/* Import Google Fonts for Etsy-like typography */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+/* Import Google Fonts for beautiful typography */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -16,18 +16,30 @@
     --color-light: #fff;
     --etsy-orange: #ff6900;
     --etsy-orange-hover: #e55a00;
-  }
-
-  body {
-    font-family: 'Inter', sans-serif;
+  }  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   .font-serif {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Crimson Text', serif;
   }
 
   .font-sans {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  p {
+    line-height: 1.6;
   }
 }
 
@@ -563,3 +575,32 @@ button.reset:hover:not(:has(> *)) {
 .account-logout {
   display: inline-block;
 }
+
+/* Typography utilities */
+  .text-light {
+    font-weight: 300;
+  }
+
+  .text-normal {
+    font-weight: 400;
+  }
+
+  .text-medium {
+    font-weight: 500;
+  }
+
+  .text-semibold {
+    font-weight: 600;
+  }
+
+  .text-bold {
+    font-weight: 700;
+  }
+
+  .letter-spacing-wide {
+    letter-spacing: 0.025em;
+  }
+
+  .letter-spacing-wider {
+    letter-spacing: 0.05em;
+  }

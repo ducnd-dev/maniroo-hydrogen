@@ -12,10 +12,9 @@ export default {
           600: '#e55a00',
           700: '#c2410c',
         },
-      },
-      fontFamily: {
-        serif: ['Playfair Display', 'serif'],
-        sans: ['Inter', 'sans-serif'],
+      },      fontFamily: {
+        serif: ['Crimson Text', 'serif'],
+        sans: ['DM Sans', 'sans-serif'],
       },
     },
   },
