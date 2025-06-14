@@ -2,12 +2,19 @@ import {Await, useLoaderData, Link} from 'react-router';
 import {Suspense} from 'react';
 import {Image} from '@shopify/hydrogen';
 import {ProductItem} from '~/components/ProductItem';
+import {generateMeta, generateStructuredData} from '~/lib/seo';
+import {StructuredData} from '~/components/StructuredData';
 
 /**
  * @type {MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return generateMeta({
+    title: 'Home - Discover Unique Handmade Products',
+    description: 'Discover unique handmade products, vintage treasures, and creative goods at Maniroo Store. Shop from independent creators and artisans worldwide.',
+    keywords: ['handmade', 'unique products', 'artisan', 'creative goods', 'vintage', 'marketplace'],
+    type: 'website'
+  });
 };
 
 /**
@@ -72,8 +79,16 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
+  
+  // Generate structured data for homepage
+  const websiteSchema = generateStructuredData({}, 'WebSite');
+  const organizationSchema = generateStructuredData({}, 'Organization');
+  
   return (
     <div className="min-h-screen bg-gray-50">
+      <StructuredData data={websiteSchema} />
+      <StructuredData data={organizationSchema} />
+      
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-orange-50 to-orange-100 py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">

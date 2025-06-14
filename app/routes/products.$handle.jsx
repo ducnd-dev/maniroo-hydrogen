@@ -11,18 +11,21 @@ import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImageCarousel} from '~/components/ProductImageCarousel';
 import {ProductForm} from '~/components/ProductForm';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import {generateProductMeta, generateStructuredData} from '~/lib/seo';
+import {StructuredData} from '~/components/StructuredData';
 
 /**
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  return [
-    {title: `Hydrogen | ${data?.product.title ?? ''}`},
-    {
-      rel: 'canonical',
-      href: `/products/${data?.product.handle}`,
-    },
-  ];
+  if (!data?.product) {
+    return [
+      {title: 'Product Not Found'},
+      {name: 'description', content: 'The requested product could not be found.'},
+    ];
+  }
+
+  return generateProductMeta(data.product, `/products/${data.product.handle}`);
 };
 
 /**
@@ -95,7 +98,9 @@ export default function Product() {
 
   // Sets the search param to the selected variant without navigation
   // only when no search params are set in the url
-  useSelectedOptionInUrlParam(selectedVariant.selectedOptions);  // Get the product options array
+  useSelectedOptionInUrlParam(selectedVariant.selectedOptions);
+
+  // Get the product options array
   const productOptions = getProductOptions({
     ...product,
     selectedOrFirstAvailableVariant: selectedVariant,
@@ -103,8 +108,12 @@ export default function Product() {
 
   const {title, descriptionHtml} = product;
 
+  // Generate structured data for product
+  const productSchema = generateStructuredData(product, 'Product');
+
   return (
     <div className="min-h-screen bg-white">
+      <StructuredData data={productSchema} />
       <div className="max-w-7xl mx-auto px-4 py-8">        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           {/* Product Images Carousel */}
           <div>

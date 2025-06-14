@@ -7,6 +7,7 @@ import {ProductItem} from '~/components/ProductItem';
 import {ProductFilter} from '~/components/ProductFilter';
 import {ActiveFilterTags} from '~/components/ActiveFilterTags';
 import {ProductListHeader, QuickFilterBar} from '~/components/ProductListHeader';
+import {generateCollectionMeta} from '~/lib/seo';
 
 /**
  * Convert URL search params to Shopify product filters
@@ -91,7 +92,14 @@ function buildSortKey(sort) {
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
+  if (!data?.collection) {
+    return [
+      {title: 'Collection Not Found'},
+      {name: 'description', content: 'The requested collection could not be found.'},
+    ];
+  }
+
+  return generateCollectionMeta(data.collection, `/collections/${data.collection.handle}`);
 };
 
 /**

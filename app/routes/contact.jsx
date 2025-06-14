@@ -1,13 +1,16 @@
 import {Form, useActionData, useNavigation} from 'react-router';
+import {generateMeta} from '~/lib/seo';
 
 /**
  * @type {MetaFunction}
  */
 export const meta = () => {
-  return [
-    {title: 'Contact Us | Etsy-style Store'},
-    {name: 'description', content: 'Get in touch with us for questions, custom orders, or just to say hello!'},
-  ];
+  return generateMeta({
+    title: 'Contact Us - Get In Touch',
+    description: 'Get in touch with Maniroo Store for questions, custom orders, wholesale inquiries, or just to say hello! We\'d love to hear from you.',
+    keywords: ['contact', 'customer service', 'custom orders', 'wholesale', 'help', 'support'],
+    type: 'website'
+  });
 };
 
 /**
